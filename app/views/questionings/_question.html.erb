@@ -13,7 +13,8 @@
     <% end %>
 
     <%# Question type icon %>
-    <div class="type"><%= form_item_icon(qing.qtype_name) %></div>
+    <% icon_name = qing.qtype_name == 'emotional' ? 'select_one' : qing.qtype_name %>
+    <div class="type"><%= form_item_icon(icon_name) %></div>
 
     <%# Filled in by CSS %>
     <div class="rank"></div>

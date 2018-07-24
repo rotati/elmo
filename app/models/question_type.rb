@@ -75,6 +75,10 @@ class QuestionType
     name: "video",
     odk_name: "binary",
     properties: %w[multimedia]
+  },{
+    name: "emotional",
+    odk_name: "string",
+    properties: %w[printable smsable textual headerable defaultable refable]
   }]
 
   # looks up a question type by name
