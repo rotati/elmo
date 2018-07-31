@@ -3,7 +3,7 @@ class API::V2::ResponsesController < API::V2::BaseController
     @response = Response.new(response_params)
     @response.source = "web"
     @response.modifier = "web"
-    @response.mission = @api_user.last_mission
+    @response.mission = current_mission
 
     begin
       @response.save!
