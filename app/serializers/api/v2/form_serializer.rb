@@ -21,7 +21,7 @@ class API::V2::FormSerializer < ActiveModel::Serializer
 
   def serialize_question(question)
     {
-      id: question.qid,
+      id: question.id,
       title: question.name,
       hint: question.hint,
       type: question.qtype_name,
