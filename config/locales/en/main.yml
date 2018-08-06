@@ -642,7 +642,7 @@ en:
         qtype_name: "The kind of information the user will be entering."
         access_level: "Inherit: Same access level as parent form. Private: No one can access the data via the API, regardless of parent form access level."
         metadata_type: "A special value that can be pre-filled into this question. If chosen, this question will be automatically hidden and not required, and any conditions will be removed."
-        choose_once: "An option must be selected only once. This feature will only work with map select question."
+        choose_once: "After an option has been selected in a question, the other can not choose it again. This feature is only work on select one question type with geographic."
       questioning:
         default: "Text entered here will be pre-filled in the answer space (for ODK only). You can enter $QuestionCode to include the value of a previous question, and $!RepeatNum to include the number of the current item in a repeat group.\n\nFor example, entering\n\n&nbsp;&nbsp;&nbsp;ID: $Household-$!RepeatNum\n\nwould pre-fill the answer with\n\n&nbsp;&nbsp;&nbsp;ID: 176-2\n\nfor the second person in household 176, assuming you have a question with code 'Household'."
         display_logic: "Conditions which must be met in order for this question to be shown to the user."
