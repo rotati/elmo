@@ -25,7 +25,8 @@ class API::V2::FormSerializer < ActiveModel::Serializer
       title: question.name,
       hint: question.hint,
       type: question.qtype_name,
-      options: question.qtype_name.in?(['select_one', 'select_multiple']) ? question.preordered_option_nodes.map{ |on| { label: on.option.name, value:  on.id} } : nil
+      options: question.qtype_name.in?(['select_one', 'select_multiple']) ? options(question) : nil,
+      choose_once: question.choose_once
     }
   end
 
@@ -33,5 +34,21 @@ class API::V2::FormSerializer < ActiveModel::Serializer
     group.map do |question, _|
       serialize_question(question)
     end
+  end
+
+  def options(question)
+    {
+      multilevel: question.option_set.multilevel?,
+      geographic: question.option_set.geographic,
+      allow_coordinates: question.option_set.allow_coordinates,
+      data: question.preordered_option_nodes.map do |on|
+        {
+          label: on.option.name,
+          value:  on.id,
+          latitude: on.option.latitude.to_f,
+          longitude: on.option.longitude.to_f
+        }
+      end
+    }
   end
 end

@@ -86,7 +86,7 @@
   }
 
   klass.prototype.show_option_set_select = function(show, options) { var self = this;
-    var select = $("div.question_fields .form-field[data-field-name=option_set_id]");
+    var select = $("div.question_fields .form-field[data-field-name=option_set_id], div.question_fields .form-field[data-field-name=choose_once]");
     select.css('display', show ? 'flex' : 'none');
 
     // If showing, disable the multilevel options based on options.multilevel.

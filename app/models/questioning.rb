@@ -5,7 +5,7 @@ class Questioning < FormItem
     :first_level_option_nodes, :has_options?, :hint, :level_count, :level, :levels, :min_max_error_msg,
     :multilevel?, :multimedia?, :name, :numeric?, :odk_constraint, :odk_name, :option_set_id,
     :option_set_id=, :option_set, :option_set=, :options, :preordered_option_nodes, :printable?,
-    :qtype_name, :qtype_name=, :qtype, :select_options, :sms_formatting_as_appendix?,
+    :qtype_name, :qtype_name=, :qtype, :select_options, :sms_formatting_as_appendix?, :choose_once,
     :sms_formatting_as_text?, :standardized?, :subqings, :tags, :temporal?, :title, :metadata_type,
     to: :question
   delegate :published?, to: :form

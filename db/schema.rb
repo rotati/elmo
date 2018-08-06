@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_180_521_134_833) do
+ActiveRecord::Schema.define(version: 20_180_806_080_019) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
@@ -394,6 +394,7 @@ ActiveRecord::Schema.define(version: 20_180_521_134_833) do
     t.string "access_level", limit: 255, default: "inherit", null: false
     t.boolean "auto_increment", default: false, null: false
     t.text "canonical_name", null: false
+    t.boolean "choose_once", default: false
     t.string "code", limit: 255
     t.datetime "created_at"
     t.datetime "deleted_at"

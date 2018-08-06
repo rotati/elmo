@@ -38,6 +38,7 @@
     options: translate_options(Question::METADATA_TYPES, :metadata_types)) %>
   <% unless admin_mode? %>
     <%= f.field(:key, type: :check_box) %>
+    <%= f.field(:choose_once, type: :check_box, label: 'Options can choose once') %>
     <%= f.field(:access_level, type: :select,
       options: translate_options(Question::API_ACCESS_LEVELS, :access_levels)) %>
   <% end %>
