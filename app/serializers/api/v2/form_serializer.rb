@@ -38,6 +38,7 @@ class API::V2::FormSerializer < ActiveModel::Serializer
 
   def options(question)
     {
+      id: question.option_set.id,
       multilevel: question.option_set.multilevel?,
       geographic: question.option_set.geographic,
       allow_coordinates: question.option_set.allow_coordinates,

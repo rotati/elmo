@@ -230,8 +230,9 @@ ELMO::Application.routes.draw do
 
     api_version module: "v2", path: { value: "v2"} do
       scope "/m/:mission_name", mission_name: /[a-z][a-z0-9]*/, defaults: {mode: "m"} do
-        resources :responses, only: :create
-        resources :forms, only: :index
+        resources :responses,   only: :create
+        resources :forms,       only: :index
+        resources :option_sets, only: :update
       end
     end
   end
