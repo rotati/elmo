@@ -3,7 +3,7 @@ class API::V2::BaseController < ApplicationController
 
   rescue_from Exception, with: :handle_error
 
-  before_filter :authenticate
+  before_action :authenticate
 
   serialization_scope :view_context
 
