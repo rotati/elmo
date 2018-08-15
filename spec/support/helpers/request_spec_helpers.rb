@@ -8,7 +8,7 @@ module RequestSpecHelpers
   end
 
   def login_without_redirect(user)
-    post("/en/user-session", user_session: {login: user.login, password: test_password})
+    post("/en/user-session", {params: {user_session: {login: user.login, password: test_password}}})
   end
 
   def logout
@@ -24,34 +24,25 @@ module RequestSpecHelpers
     path_args.unshift(params[:obj]) if params[:obj]
     path = send("api_v1_#{endpoint}_path", *path_args)
 
-    get path, params[:params], {"HTTP_AUTHORIZATION" => "Token token=#{params[:user].api_key}"}
+    get path, {params: params[:params], headers: {"HTTP_AUTHORIZATION" => "Token token=#{params[:user].api_key}"}}
   end
 
-  def get_s(*args)
-    get *args
+  def get_s(path, opts = {})
+    if opts.empty?
+      get path
+    else
+      get path, opts
+    end
     assert_response(:success)
   end
 
-  def post_s(*args)
-    post *args
+  def post_s(path, opts = {})
+    if opts.empty?
+      post path
+    else
+      post path, opts
+    end
     assert_response(:success)
-  end
-
-  def submit_j2me_response(params)
-    raise "form must have version" unless @form.current_version
-
-    # Add all the extra stuff that J2ME adds to the data hash
-    params[:data]["id"] = @form.id.to_s
-    params[:data]["uiVersion"] = "1"
-    params[:data]["version"] = @form.current_version.code
-    params[:data]["name"] = @form.name
-    params[:data]["xmlns:jrm"] = "http://dev.commcarehq.org/jr/xforms"
-    params[:data]["xmlns"] = "http://openrosa.org/formdesigner/#{@form.current_version.code}"
-
-    # If we are doing a normally authenticated submission, add credentials.
-    headers = params[:auth] ? {"HTTP_AUTHORIZATION" => encode_credentials(@user.login, test_password)} : {}
-
-    post(@submission_url, params.slice(:data), headers)
   end
 
   # Needed for older request specs, maybe related to assert_select.

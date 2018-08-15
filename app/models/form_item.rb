@@ -208,21 +208,29 @@ class FormItem < ApplicationRecord
     false
   end
 
+  def debug_tree(indent: 0)
+    child_tree = sorted_children.map { |c| c.debug_tree(indent: indent + 1) }.join
+    chunks = []
+    chunks << " " * (indent * 2)
+    chunks << rank.to_s.rjust(2)
+    chunks << " "
+    chunks << self.class.name.ljust(15)
+    chunks << " Type: #{qtype_name}," if qtype_name.present?
+    chunks << " Code: #{code}"
+    chunks << " Repeatable" if repeatable?
+    "\n#{chunks.join}#{child_tree}"
+  end
+
   private
 
   def normalize
-    display_conditions.each do |cond|
-      display_conditions.destroy(cond) if cond.all_fields_blank?
-    end
+    display_conditions.destroy(display_conditions.select(&:all_fields_blank?))
+    skip_rules.destroy(skip_rules.select(&:all_fields_blank?))
 
     if display_conditions.reject(&:marked_for_destruction?).none?
       self.display_if = "always"
     elsif display_if == "always"
       self.display_if = "all_met"
-    end
-
-    skip_rules.each do |rule|
-      skip_rules.destroy(rule) if rule.all_fields_blank?
     end
   end
 

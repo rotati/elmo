@@ -47,7 +47,6 @@ class Report::Report < ApplicationRecord
 
       new_without_cast(*a, &b)
     end
-    alias_method_chain :new, :cast
   end
 
   # remove report sub-relationship of objects
@@ -85,7 +84,7 @@ class Report::Report < ApplicationRecord
   end
 
   # Should be overridden by children.
-  def run(current_ability = nil)
+  def run(current_ability = nil, _options = {})
     raise NotImplementedError
   end
 

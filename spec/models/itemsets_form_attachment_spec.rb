@@ -1,5 +1,5 @@
 # encoding: utf-8
-require "spec_helper"
+require "rails_helper"
 require "fileutils"
 
 describe ItemsetsFormAttachment, :odk do
@@ -171,7 +171,7 @@ describe ItemsetsFormAttachment, :odk do
 
   def prepare_itemset_expectation(filename, option_sets)
     nodes = option_sets.map(&:preordered_option_nodes).uniq.flatten
-    prepare_expectation("odk/itemsets/#{filename}",
+    prepare_fixture("odk/itemsets/#{filename}",
       optsetid: option_sets.map(&:id),
       optcode: nodes.map(&:odk_code)
     )

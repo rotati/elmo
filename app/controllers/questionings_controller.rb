@@ -4,7 +4,7 @@ class QuestioningsController < ApplicationController
   include Parameters
 
   # init the questioning object in a special way before load_resource
-  before_filter :init_qing_with_form_id, :only => [:create]
+  before_action :init_qing_with_form_id, :only => [:create]
   after_action :check_rank_fail
 
   # authorization via cancan
@@ -60,7 +60,7 @@ class QuestioningsController < ApplicationController
   # Only called via AJAX
   def destroy
     @questioning.destroy
-    render nothing: true, status: 204
+    head(204)
   end
 
   private

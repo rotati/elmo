@@ -1,25 +1,28 @@
 source "http://rubygems.org"
 
-gem "rails", "~> 4.2.5"
+gem "rails", "~> 5.1"
 
 # Assets / Javascript
-gem "sass-rails", "~> 4.0.5"
+gem "sass-rails", "~> 5.0.7"
 gem "uglifier", "~> 2.7.1"
 gem "bootstrap-modal-rails", "~> 2.2.5"
-gem "actionpack-page_caching", "~> 1.0.2"
-gem "jquery-rails", "~> 4.0.4"
+gem "actionpack-page_caching", "~> 1.1.0"
+gem "jquery-rails", "~> 4.3.3"
 gem "jquery-fileupload-rails", "~> 0.4.5"
 gem "rails-backbone", git: "https://github.com/codebrew/backbone-rails.git"
 gem "dropzonejs-rails", "~> 0.7.3"
 gem "phantomjs_polyfill-rails", "~> 1.0.0"
 
 # Authentication
-gem "activerecord-session_store", "~> 0.1.1"
-gem "authlogic", "~> 3.4.5"
+gem "activerecord-session_store", "~> 1.1.1"
+gem "authlogic", "~> 3.7.0"
 gem "scrypt", "~> 1.2.0"
 
 # authorization
-gem "cancancan", "~> 1.10.1"
+gem "cancancan", "~> 1.15.0"
+
+# Fix for compatibility issue
+gem "draper-cancancan", "~> 1.1"
 
 # core
 gem "rake", "~> 10.4.2"
@@ -30,9 +33,9 @@ gem "random_data", "~> 1.6.0"
 gem "paperclip", "~> 6.0"
 gem "term-ansicolor", "~> 1.3.0"
 gem "therubyracer", "~> 0.12.2", platforms: :ruby
-gem "draper", "~> 2.1.0"
+gem "draper", "~> 3.0.1"
 gem "attribute_normalizer", "~> 1.2.0"
-gem "responders", "~> 2.3.0"
+gem "responders", "~> 2.4.0"
 gem "thor", "0.19.1" # Newer versions produce command line argument errors. Remove version constraint when fixed.
 gem "friendly_id", "~> 5.1.0"
 
@@ -57,7 +60,7 @@ gem "acts_as_list", git: "https://github.com/sassafrastech/acts_as_list.git"
 
 # i18n
 gem "i18n-js", "~> 3.0.0.rc13"
-gem "rails-i18n", "~> 4.0.4"
+gem "rails-i18n", "~> 5.1"
 gem "iso-639", "~> 0.2.5"
 gem "i18n-country-translations", "~> 1.2.3"
 gem "i18n_country_select", "~> 1.1.7"
@@ -76,7 +79,8 @@ gem "font-awesome-rails", "~> 4.7"
 # Rich text editor
 # Version 4.2.2 seems to have a bug with asset paths.
 # See https://github.com/galetahub/ckeditor/issues/712#issuecomment-278740179
-gem "ckeditor", "~> 4.1.0"
+# So using latest master branch until that's fixed.
+gem "ckeditor", git: "https://github.com/galetahub/ckeditor"
 
 # Select box on steriods
 gem "select2-rails", "~> 4.0"
@@ -86,7 +90,7 @@ gem "ejs", "~> 1.1.1"
 
 # background job support
 gem "daemons", "~> 1.2.1"
-gem "delayed_job_active_record", "~> 4.0.3"
+gem "delayed_job_active_record", "~> 4.1.3"
 
 # search
 gem "pg_search"
@@ -101,7 +105,7 @@ gem "bootstrap-sass", "~> 3.3.4"
 gem "spinjs-rails", "1.3"
 
 # tree data structure
-gem "ancestry", "~> 2.1.0"
+gem "ancestry", "~> 3.0.0"
 
 # Middleware for handling abusive requests
 gem "rack-attack", git: "https://github.com/sassafrastech/rack-attack.git"
@@ -111,7 +115,7 @@ gem "recaptcha", "~> 0.4.0", require: "recaptcha/rails"
 
 # XLS support
 gem "axlsx", "~> 2.1.1", git: "https://github.com/sassafrastech/axlsx.git", branch: "stable"
-gem "axlsx_rails", "~> 0.3.0"
+gem "axlsx_rails", "~> 0.5.0"
 gem "roo", "~> 2.1.1"
 
 # Twilio SMS integration
@@ -121,7 +125,7 @@ gem "twilio-ruby", "~> 4.1.0"
 gem "phony", "~> 2.15.26"
 
 # Soft delete
-gem "acts_as_paranoid", "~> 0.5.0"
+gem "acts_as_paranoid", "~> 0.6.0"
 
 # QR barcode
 gem 'rqrcode', '~> 0.10.1'
@@ -134,9 +138,10 @@ gem "exception_notification"
 
 #react
 gem "react-rails"
+gem 'webpacker', '~> 3.5'
 
 # Closure tree for answer heirarchy
-gem "closure_tree"
+gem "closure_tree", git: "https://github.com/smoyth/closure_tree", branch: "patch-1"
 
 group :development do
   # generate diagrams with rake db:migrate
@@ -146,10 +151,9 @@ group :development do
   gem "bullet", "~> 4.14.4"
 
   # development web server
-  gem "thin", "~> 1.6.3"
+  gem "thin", "~> 1.7.0"
 
   # speed up development mode
-  gem "rails-dev-tweaks", "~> 1.2.0"
   gem "spring", "~> 1.3.3"
 
   # Better error pages
@@ -164,8 +168,9 @@ end
 group :development, :test do
   # test framework
   gem "jasmine-rails", "~> 0.10.7"
-  gem "rspec-rails", "~> 3.3.0"
-  gem "rspec-collection_matchers", "~> 1.1.2"
+  gem "rspec-rails", "~> 3.7.2"
+  gem "rspec-collection_matchers", "~> 1.1.3"
+  gem "rails-controller-testing"
 
   # mocking/stubbing/factories
   gem "mocha", "~> 1.1.0"
@@ -178,7 +183,7 @@ group :development, :test do
   gem "selenium-webdriver", "~> 3.9"
 
   # cleans database for testing
-  gem "database_cleaner", "~> 1.4.1"
+  gem "database_cleaner", "~> 1.7.0"
 
    # sets time for testing
   gem "timecop", "~> 0.7.3"
@@ -194,9 +199,6 @@ group :development, :test do
 
   # builds JMeter test plans
   gem "ruby-jmeter", "~> 2.13.4"
-
-  # removes "get assets" from logs
-  gem "quiet_assets", "~> 1.1.0"
 
   # debugging
   gem "pry"

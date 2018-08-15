@@ -97,6 +97,7 @@ class OptionNode < ApplicationRecord
   end
 
   def option_attribs=(attribs)
+    attribs = attribs.to_h
     attribs.symbolize_keys! if attribs.respond_to?(:symbolize_keys!)
     if attribs[:id]
       self.option = Option.find(attribs[:id])
@@ -145,12 +146,12 @@ class OptionNode < ApplicationRecord
 
   # an odk-friendly unique code
   def odk_code
-    "on#{id}"
+    Odk::CodeMapper.instance.code_for_item(self)
   end
 
   # an odk-friendly unique code for this node's parent
   def parent_odk_code
-    "on#{parent_id}"
+    Odk::CodeMapper.instance.code_for_item(parent)
   end
 
   # Serializes all descendants. Meant to be called on root.
@@ -307,6 +308,10 @@ class OptionNode < ApplicationRecord
     # We use the ! variant of update and create below so that validation
     # errors on children and options will cascade up.
     (children_attribs || []).each_with_index do |attribs, i|
+
+      if attribs.is_a?(Array)
+        attribs = attribs.last
+      end
 
       # If there is a matching (by id) existing child.
       if attribs[:id] && matching = children_by_id[attribs[:id]]

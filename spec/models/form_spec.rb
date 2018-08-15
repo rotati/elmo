@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Form do
   let(:mission) { create(:mission) }
@@ -18,6 +18,18 @@ describe Form do
     it "should return false for user not in whitelist" do
       other_user = FactoryGirl.create(:user)
       expect(@form.api_user_id_can_see?(other_user.id)).to be_falsey
+    end
+  end
+
+  describe "validation" do
+    # Detailed testing of this validator is in own file.
+    describe "DynamicPatternValidator" do
+      let(:form) { build(:form, default_response_name: "Item: calc($Foo + 4) ") }
+
+      it "is hooked up properly" do
+        expect(form).to be_invalid
+        expect(form.errors[:default_response_name].join).to match(/must surround/)
+      end
     end
   end
 
@@ -46,21 +58,6 @@ describe Form do
       @form.name = "Something else"
       @form.save!
       expect(@form.pub_changed_at).not_to be_within(5.minutes).of(Time.zone.now)
-    end
-  end
-
-  describe "needs_odk_manifest?", :odk do
-    context "for form with single level option sets only" do
-      before { @form = create(:form, question_types: %w(select_one)) }
-      it "should return false" do
-        expect(@form.needs_odk_manifest?).to be false
-      end
-    end
-    context "for form with multi level option set" do
-      before { @form = create(:form, question_types: %w(select_one multilevel_select_one)) }
-      it "should return true" do
-        expect(@form.needs_odk_manifest?).to be true
-      end
     end
   end
 

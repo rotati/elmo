@@ -42,14 +42,28 @@ Metrics/LineLength:
   Enabled: true
   Max: 110
 
+Metrics/MethodLength:
+  Max: 12
+
 Metrics/AbcSize:
   Max: 30
 
 Style/AsciiComments:
   Enabled: false
 
+Style/Documentation:
+  Exclude:
+    - db/migrate/*
+
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  IgnoredMethods:
+    - []
+    - to
+    - not_to
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
@@ -59,3 +73,6 @@ Bundler:
 
 Rails:
   Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: false

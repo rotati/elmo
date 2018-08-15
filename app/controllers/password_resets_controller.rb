@@ -4,8 +4,8 @@ class PasswordResetsController < ApplicationController
   # Don't need to authorize for any of these because they're for logged out users
   skip_authorization_check
 
-  before_filter(:ensure_logged_out)
-  before_filter(:load_user_using_perishable_token, only: [:edit, :update])
+  before_action(:ensure_logged_out)
+  before_action(:load_user_using_perishable_token, only: [:edit, :update])
 
   # When the user requests a password reset
   def new
@@ -27,7 +27,7 @@ class PasswordResetsController < ApplicationController
         flash.now[:error] = t("password_reset.no_associated_email")
         render :new
       else
-        deliver_password_reset_instructions(user)
+        reset_password(user, notify_method: "email")
         flash[:success] = t("password_reset.check_email")
         redirect_to(login_url)
       end
@@ -69,6 +69,6 @@ class PasswordResetsController < ApplicationController
   end
 
   def password_reset_params
-    params.require(:password_reset).permit(:identifier).symbolize_keys
+    params.require(:password_reset).permit(:identifier).to_h.symbolize_keys
   end
 end

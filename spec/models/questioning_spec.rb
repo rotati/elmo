@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Questioning do
   it "mission should get copied from question on creation" do
@@ -80,12 +80,24 @@ describe Questioning do
         end
       end
 
-      context  "add a metadata_type with no existing conditions" do
+      context "add a metadata_type with no existing conditions" do
         let(:q_attrs) { {qtype_name: "datetime", metadata_type: "formstart"} }
         let(:submitted) { {display_conditions: []} }
         it "should not change the display conditions" do
           is_expected.to eq(display_conditions: [])
         end
+      end
+    end
+  end
+
+  describe "validation" do
+    # Detailed testing of this validator is in own file.
+    describe "DynamicPatternValidator" do
+      let(:questioning) { build(:questioning, default: "Item: calc($Foo + 4) ") }
+
+      it "is hooked up properly" do
+        expect(questioning).to be_invalid
+        expect(questioning.errors[:default].join).to match(/must surround/)
       end
     end
   end

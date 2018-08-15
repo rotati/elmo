@@ -9,7 +9,7 @@ class FormsController < ApplicationController
   helper OdkHelper
 
   # special find method before load_resource
-  before_filter :load_form, :only => [:show, :edit, :update]
+  before_action :load_form, :only => [:show, :edit, :update]
 
   after_action :check_rank_fail
 
@@ -103,8 +103,10 @@ class FormsController < ApplicationController
   # Format is always :xml
   def odk_manifest
     authorize!(:download, @form)
-    @cache_key = @form.odk_download_cache_key
+    @cache_key = "#{@form.odk_download_cache_key}/manifest"
     unless fragment_exist?(@cache_key)
+      questions = @form.visible_questionings.map(&:question).select(&:audio_prompt_file_name)
+      @decorated_questions = Odk::QuestionDecorator.decorate_collection(questions)
       @ifa = ItemsetsFormAttachment.new(form: @form)
       @ifa.ensure_generated
     end
@@ -225,7 +227,7 @@ class FormsController < ApplicationController
   # makes an unpublished copy of the form that can be edited without affecting the original
   def clone
     begin
-      cloned = @form.replicate(mode: clone)
+      cloned = @form.replicate(mode: :clone)
 
       # save the cloned obj id so that it will flash
       flash[:modified_obj_id] = cloned.id

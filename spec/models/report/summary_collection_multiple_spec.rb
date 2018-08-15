@@ -2,7 +2,7 @@
 # makes sure that the data is disaggregated properly
 # tests for the singleton case, where there is only one subset in the collection, are currently in SummaryCollectionSingleTest
 
-require 'spec_helper'
+require 'rails_helper'
 
 describe "summary collection with multiple subsets" do
  it "collection should have proper disagg values" do
@@ -54,7 +54,7 @@ describe "summary collection with multiple subsets" do
 
  it "collections with text questions should have correct summaries" do
     prepare_form_and_collection('text', 'select_one',
-      {'a' => %w(foo bar baz), 'b' => %w(bing bop) + [nil]}, :dont_shuffle => true)
+      {'a' => %w(foo bar baz), 'b' => %w(bing bop) + [""]}, :dont_shuffle => true)
 
     # check that items are correct
     expect(items_for_disagg_value('a', :text)).to eq(%w(foo bar baz))
