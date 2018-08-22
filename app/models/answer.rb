@@ -57,7 +57,7 @@ class Answer < ResponseNode
   validate :validate_min_max, if: -> { should_validate?(:min_max) }
   validate :validate_required, if: -> { should_validate?(:required) }
   validate :validate_location, if: -> { should_validate?(:location) }
-  validate :validate_date, :validate_datetime
+  # validate :validate_date, :validate_datetime
 
   accepts_nested_attributes_for(:choices)
 
