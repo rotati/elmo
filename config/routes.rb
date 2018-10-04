@@ -236,6 +236,11 @@ ELMO::Application.routes.draw do
         resources :responses,   only: :create
         resources :forms,       only: :index
         resources :option_sets, only: :update
+
+        namespace :media, type: /audios|images|videos/ do
+          post ":type" => "objects#create", as: :create
+          delete ":type/:id" => "objects#delete", as: :delete
+        end
       end
     end
   end
